@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project 1</title>
+
+    <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="javascript/app.js">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet">
+
+    <!-- jquery validate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+     <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+</head>
+
+<body>
+  
+        <canvas id="myCanvas">
+
+    </canvas>
+    <section class="banner-section">
+        <div class="container">
+           <div class="page-header">
+         <h1>Company Junkies</h1>
+            <div class="form-section">
+                <div class="row">
+                    <div class="col-md-5 no-padding">
+                        <form class="compForm" id="company-form" method="get" action="This field is required">
+                            <div class="form-group">
+                                <input type="text" name="cname" class="form-control" id="company-input" placeholder="Company" required>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    </div>
+                    <div class="col-md-3 no-padding">
+                        <button type="button" id="find-company" class="btn btn-dark">Search Company</button>
+
+
+
+
+            <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">Recent search</h4>
+            </div>
+            <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody id="searchTable">
+                  <tr>
+                  <td><div id="recentSearch-display"></div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>    
+                        <div class="container">
+      <div class="job-details-container">
+          <div class="row">
+              <div class="col-md-8 no-padding">
+                  <div class="inside-sec-container">
+                      <div class="initial-desc">
+
+                        <h2><span class="link"></span></h2>
+                        <h2><span class="url"></span></h2> 
+                        
+                         <h2><span class="name"></span></h2>
+                      <div class="perks-sec">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled">
+                                      <li><i class="fa fa-eye" aria-hidden="true"></i>&nbsp Overall Rating: <span class="rating"></span>
+                                      </li>
+                                      <li><i class="fa fa-eye" aria-hidden="true"></i>&nbsp Culture & Values: <span class="cv"></span></li>
+                                      <li><i class="fa fa-eye" aria-hidden="true"></i>&nbsp Senior Leadership: <span class="lead"></span></li>
+                                      <li><i class="fa fa-eye" aria-hidden="true"></i>&nbsp Compensation & Benefits: <span class="comp"></span></li>
+                                      <li><i class="fa fa-eye" aria-hidden="true"></i>&nbsp Work Life Balance: <span class="wl"></span></li>
+                                      
+                                                    </ul>
+                                               </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                 </div>
+                            </div>
+                         </div>
+                     </div>
+                    </div>
+                              </div>
+                        </div>
+                   </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+</section>
+   
+                            
+
+    <script>
+    var mainCanvas = document.getElementById("myCanvas");
+    var mainContext = mainCanvas.getContext('2d');
+
+    var circles = [];
+
+    function Circle(radius, speed, width, xPos, yPos) {
+      this.radius = radius;
+      this.speed = speed;
+      this.width = width;
+      this.xPos = xPos;
+      this.yPos = yPos;
+      this.opacity = 0.05 + Math.random() * 0.5;
+
+      this.counter = 0;
+
+      var signHelper = Math.floor(Math.random() * 2);
+
+      if (signHelper == 1) {
+        this.sign = -1;
+      } else {
+        this.sign = 1;
+      }
+    }
+
+    Circle.prototype.update = function() {
+
+      this.counter += this.sign * this.speed;
+
+      mainContext.beginPath();
+
+      mainContext.arc(this.xPos + Math.cos(this.counter / 100) * this.radius,
+        this.yPos + Math.sin(this.counter / 100) * this.radius,
+        this.width,
+        0,
+        Math.PI * 2,
+        false);
+
+      mainContext.closePath();
+
+      mainContext.fillStyle = 'rgba(205, 241, 238,' + this.opacity + ')';
+      mainContext.fill();
+    };
+
+    function drawCircles() {
+      for (var i = 0; i < 100; i++) {
+        var randomX = Math.round(Math.random() * window.innerWidth);
+        var randomY = Math.round(Math.random() * window.innerHeight);
+        var speed = 0.2 + Math.random() * 3;
+        var size = 5 + Math.random() * 100;
+         
+        var circle = new Circle(50, speed, size, randomX, randomY);
+        circles.push(circle);
+      }
+      draw();
+    }
+    drawCircles();
+
+    function draw() {
+        mainContext.canvas.width  = window.innerWidth;
+          mainContext.canvas.height = 400;
+      mainContext.clearRect(0, 0, 400, 400);
+
+      for (var i = 0; i < circles.length; i++) {
+        var myCircle = circles[i];
+        myCircle.update();
+      }
+      requestAnimationFrame(draw);
+    }
+  </script>
+    
+     <!-- Script -->
+  <script type="text/javascript" src="javascript/app.js"></script>
+  
+</body>
+
+</html>
